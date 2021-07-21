@@ -54,7 +54,8 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
 
 
-
+    // JSON Parser
+    compile group: 'org.json', name: 'json', version: '20160810'
 
 
 }
