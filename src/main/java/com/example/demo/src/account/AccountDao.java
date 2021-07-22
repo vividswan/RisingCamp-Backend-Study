@@ -69,6 +69,25 @@ public class AccountDao {
                 ),
                 getUserParams);
     }
+
+    public List<GetAccountRes> getAccountBykakaoId(long kakaoId){
+        String getUserQuery = "select * from Account where (kakaoId = ? AND status != 'Deleted')";
+        long getUserParams = kakaoId;
+        return this.jdbcTemplate.query(getUserQuery,
+                (rs, rowNum) -> new GetAccountRes(
+                        rs.getLong("id"),
+                        rs.getString("nickname"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("language"),
+                        rs.getString("profileImageUrl"),
+                        rs.getFloat("mannerTemperature"),
+                        rs.getFloat("reTransactionRate"),
+                        rs.getFloat("responseRate"),
+                        rs.getInt("avgResponseHour")
+                ),
+                getUserParams);
+    }
     
 
     public int createAccount(PostAccountReq postAccountReq){
@@ -138,5 +157,12 @@ public class AccountDao {
                         rs.getInt("avgResponseHour")
                 )
         );
+    }
+
+    public int createAccountKakaoId(String email, Long kakaoId) {
+        String modifyUserNameQuery = "update Account set kakaoId = ? where email = ? ";
+        Object[] modifyUserNameParams = new Object[]{kakaoId , email};
+
+        return this.jdbcTemplate.update(modifyUserNameQuery,modifyUserNameParams);
     }
 }
