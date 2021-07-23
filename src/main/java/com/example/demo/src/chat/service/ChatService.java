@@ -50,7 +50,6 @@ public class ChatService {
             int result = chatDao.createChat(accountId, postChatReq);
             return result;
         } catch (Exception exception) {
-            System.out.println(exception.getMessage());
             throw new BaseException(INVALID_POSTS_ID);
         }
     }
