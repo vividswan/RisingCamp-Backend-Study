@@ -51,6 +51,7 @@ public class AccountService {
             String jwt = jwtService.createJwt(userIdx);
             return new PostAccountRes(jwt,userIdx);
         } catch (Exception exception) {
+            System.out.println(exception.getMessage());
             throw new BaseException(DISABLE_CREATE_JWT);
         }
     }
@@ -58,6 +59,17 @@ public class AccountService {
     public void modifyUserName(PatchAccountReq patchAccountReq) throws BaseException {
         try{
             int result = accountDao.updateAccountNickname(patchAccountReq);
+            if(result == 0){
+                throw new BaseException(MODIFY_FAIL_USERNAME);
+            }
+        } catch(Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public void createAccountKakaoId(String email, Long kakaoId) throws BaseException {
+        try{
+            int result = accountDao.createAccountKakaoId(email, kakaoId);
             if(result == 0){
                 throw new BaseException(MODIFY_FAIL_USERNAME);
             }

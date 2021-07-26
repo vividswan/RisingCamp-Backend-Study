@@ -76,6 +76,16 @@ public class AccountProvider {
         }
     }
 
+    @Transactional(readOnly = true)
+    public List<GetAccountRes> getAccountByKakaoId(Long kakaoId) throws BaseException {
+        try {
+            List<GetAccountRes> getAccountRes = accountDao.getAccountBykakaoId(kakaoId);
+            return getAccountRes;
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
     public PostLoginRes logIn(PostLoginReq postLoginReq) throws BaseException{
         Account account = accountDao.getPwd(postLoginReq);
         String password;
